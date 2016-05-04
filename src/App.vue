@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>{{ msg }}</h1>
+    
   </div>
 </template>
 
@@ -8,11 +8,6 @@
 export default {
   data () {
     return {
-      // note: changing this line won't causes changes
-      // with hot-reload because the reloaded component
-      // preserves its current state and we are modifying
-      // its initial state.
-      msg: 'Hello Vue!'
     }
   }
 }
@@ -25,7 +20,11 @@ socket.on('connect',() => {
 </script>
 
 <style>
-body {
-  font-family: Helvetica, sans-serif;
+#app {
+  background-image:url('../static/background.png');
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+  width:100%;
+  height:100%;
 }
 </style>
