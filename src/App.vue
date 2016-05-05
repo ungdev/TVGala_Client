@@ -7,7 +7,14 @@
     <div class="display-separator"></div>
 
     <div class="display-schedules">
-
+      <table class="display-schedules-table">
+        <tr v-for="schedule in schedules" v-if="!isPast(schedule.end)" class="display-schedules-table-line">
+          <td class="display-schedules-table-line-start" v-if="!isPast(schedule.start)">{{ schedule.start|hour }}</td>
+          <td class="display-schedules-table-line-start" v-else>En cours</td>
+          <td class="display-schedules-table-line-name">{{ schedule.name }}</td>
+          <td class="display-schedules-table-line-location">{{ schedule.location }}</td>
+        </tr>
+      </table>
     </div>
 
     <div class="display-sms">
@@ -29,13 +36,13 @@ export default {
     return {
       currentDate: new Date(),
       informations: [],
-      information: {message: "Chargement..."}
+      information: {message: "Chargement..."},
+      schedules: []
     }
   },
   methods: {
     changeText(informationId) {
       const changeMessage = () => {
-        console.log(informationId);
         this.information = this.informations[informationId];
         this.$els.t.className = 't display-informations-message';
         this.$els.t.removeEventListener("transitionend", changeMessage);
@@ -43,6 +50,10 @@ export default {
     
       this.$els.t.className = 't fadeout display-informations-message';
       this.$els.t.addEventListener("transitionend", changeMessage, false);
+    },
+    isPast(date) {
+      if(new Date(date) > this.currentDate) return false;
+      else return true;
     }
   },
   ready () {
@@ -65,6 +76,12 @@ export default {
 
     socket.on('informations', data => {
       this.informations = data;
+    });
+
+    socket.on('schedules', data => {
+      this.schedules = data.sort(function(a,b){
+        return new Date(a.start) - new Date(b.start);
+      });
     });
   }
 }
@@ -98,6 +115,30 @@ export default {
   width:60%;
   height:71.6%;
   float:left;
+}
+
+.display-schedules-table {
+  width:100%;
+}
+
+.display-schedules-table-line {
+  width:100%;
+  text-align:center;
+  font-size:3vmin;
+}
+
+.display-schedules-table-line-start {
+  width:20%;
+  font-weight:bold;
+  font-size:4vmin;
+}
+
+.display-schedules-table-line-name {
+  width:50%;
+}
+
+.display-schedules-table-line-location {
+  width:30%;
 }
 
 .display-sms {
