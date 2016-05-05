@@ -16,6 +16,7 @@
     <div class="clear display-separator"></div>
 
     <div class="display-informations">
+      <div class="display-informations-message" v-el:t>{{ information.message }}</div>
     </div>
   </div>
 </template>
@@ -26,18 +27,44 @@ import date from './lib/date';
 export default {
   data () {
     return {
-      currentDate: new Date()
+      currentDate: new Date(),
+      informations: [],
+      information: {message: "Chargement..."}
+    }
+  },
+  methods: {
+    changeText(informationId) {
+      const changeMessage = () => {
+        console.log(informationId);
+        this.information = this.informations[informationId];
+        this.$els.t.className = 't display-informations-message';
+        this.$els.t.removeEventListener("transitionend", changeMessage);
+      }
+    
+      this.$els.t.className = 't fadeout display-informations-message';
+      this.$els.t.addEventListener("transitionend", changeMessage, false);
     }
   },
   ready () {
     setInterval(() => {
       this.currentDate = new Date();
     },1000);
+
+    let informationId = 0;
+    setInterval(() => {
+      if(!this.informations[informationId]) informationId = 0;
+      this.changeText(informationId);
+      ++informationId;
+    },5000);
   },
   attached () {
     let socket = io.connect('http://localhost:9000');
     socket.on('connect',() => {
       console.log('Client has connected to the server!');
+    });
+
+    socket.on('informations', data => {
+      this.informations = data;
     });
   }
 }
@@ -84,6 +111,14 @@ export default {
   height:15.4%;
 }
 
+.display-informations-message {
+  width:95%;
+  text-align:center;
+  margin:auto;
+  font-size:6vmin;
+  line-height:120%;
+}
+
 .display-separator {
   width:100%;
   height:1.5%;
@@ -91,5 +126,13 @@ export default {
 
 .clear {
   clear:both;
+}
+
+.t {
+  transition: opacity .4s ease;
+}
+
+.t.fadeout {
+  opacity: 0;
 }
 </style>
