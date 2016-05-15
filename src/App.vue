@@ -31,7 +31,10 @@
     <div class="clear display-separator"></div>
 
     <div class="display-informations">
-      <div class="display-informations-message" v-el:t>{{ information.message }}</div>
+      <div class="display-informations-message" v-el:t >
+        <span v-show="!displayImages">{{ information.message }}</span>
+        <img src="{{ image }}" v-for="image in filteredImages"  v-show="displayImages" class="display-informations-message-image"/> 
+      </div>
     </div>
   </div>
 </template>
@@ -47,18 +50,28 @@ export default {
       currentDate: new Date(),
       informations: [],
       information: {message: "Chargement..."},
+      displayImages: false,
       schedules: [],
-      sms: []
+      sms: [],
+      images: [],
+      filteredImages: []
     }
   },
   methods: {
     changeText(informationId) {
       const changeMessage = () => {
-        this.information = this.informations[informationId];
+        if(informationId == 'images') {
+          if(!this.displayImages) this.displayImages = 0
+          this.filteredImages = JSON.parse(JSON.stringify(this.images)).splice(this.displayImages*5, 5);
+          ++this.displayImages;
+        } else {
+          this.displayImages = false;
+          this.information = this.informations[informationId];
+        }
         this.$els.t.className = 't display-informations-message';
         this.$els.t.removeEventListener("transitionend", changeMessage);
       }
-    
+
       this.$els.t.className = 't fadeout display-informations-message';
       this.$els.t.addEventListener("transitionend", changeMessage, false);
     },
@@ -74,9 +87,16 @@ export default {
 
     let informationId = 0;
     setInterval(() => {
-      if(!this.informations[informationId]) informationId = 0;
-      this.changeText(informationId);
-      ++informationId;
+      if(!this.informations[informationId]) {
+        this.changeText('images');
+        let sizeImages = Math.ceil(this.images.length/5);
+        if(this.displayImages >= (sizeImages-1)) {
+          informationId = 0;
+        }
+      } else {
+        this.changeText(informationId);
+        ++informationId;
+      }
     },5000);
   },
   attached () {
@@ -96,6 +116,12 @@ export default {
     socket.on('schedules', data => {
       this.schedules = data.sort((a,b) => {
         return new Date(a.start) - new Date(b.start);
+      });
+    });
+
+    socket.on('images', data => {
+      this.images = data.map(image => {
+        return `http://${config.server.host}:${config.server.port}/images/${image}`;
       });
     });
   }
@@ -195,11 +221,22 @@ export default {
 }
 
 .display-informations-message {
-  width:95%;
+  height:100%;
+  width:98%;
   text-align:center;
   margin:auto;
   font-size:6vmin;
   line-height:120%;
+}
+
+.display-informations-message-image {
+  margin-top:0.5%;
+  max-height:90%;
+  max-width:15%;
+  margin-left:2%;
+  margin-right:2%;
+  vertical-align:middle;
+  line-height:100%;
 }
 
 .display-separator {
