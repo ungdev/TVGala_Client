@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "vue": "^1.0.0",
-    "babel-runtime": "^5.8.0"
+    "babel-runtime": "^5.8.0",
+    "socket.io-client": "^1.4.6"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

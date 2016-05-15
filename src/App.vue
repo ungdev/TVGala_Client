@@ -38,6 +38,8 @@
 
 <script>
 import date from './lib/date';
+import config from './config';
+import io from 'socket.io-client';
 
 export default {
   data () {
@@ -78,7 +80,7 @@ export default {
     },5000);
   },
   attached () {
-    let socket = io.connect('http://localhost:9000');
+    let socket = io.connect(`http://${config.server.host}:${config.server.port}`);
     socket.on('connect', () => {
       console.log('Client has connected to the server!');
     });
