@@ -1,12 +1,13 @@
 <template>
-  <div>
+  <div id="admin" class="admin">
     <h2>Informations:</h2>
     <form v-on:prevent>
       <input type="text" v-model="message"/> <input type="submit" value="Ajouter" @click="addInformation(inputInformation)"/>
     </form>
-    <table>
+    <br /><br />
+    <table class="admin-table">
       <tr v-for="information in informations">
-        <td>{{ information.message }}</td><td><button @click="editInformation(information)">Modifier</button> <button @click="deleteInformation(information)">Supprimer</button></td>
+        <td>{{ information.message }}</td><td><button @click="deleteInformation(information)">Supprimer</button></td>
       </tr>
     </table>
 
@@ -16,9 +17,10 @@
       <input type="text" v-model="start" v-el:datestart /> <input type="text" v-model="end" v-el:dateend /><br />
       <input type="submit" value="Ajouter" @click="addSchedule(inputSchedule)"/>
     </form>
-    <table>
+    <br /><br />
+    <table class="admin-table">
       <tr v-for="schedule in schedules">
-        <td>{{ schedule.name }}</td><td>{{ schedule.location }}</td><td>{{ schedule.start|date }}</td><td>{{ schedule.end|date }}</td><td><button @click="editSchedule(schedule)">Modifier</button> <button @click="deleteSchedule(schedule)">Supprimer</button></td>
+        <td>{{ schedule.name }}</td><td>{{ schedule.location }}</td><td>{{ schedule.start|date }}</td><td>{{ schedule.end|date }}</td><td><button @click="deleteSchedule(schedule)">Supprimer</button></td>
       </tr>
     </table>
   </div>
@@ -60,6 +62,36 @@ export default {
         .then(res => res.json())
         .then(result => {
           this.schedules.push(result);
+        });
+    },
+    deleteInformation(information) {
+      fetch(`http://${config.server.host}:${config.server.port}/information/${information.id}`, Object.assign({}, headers, {method: 'DELETE'}))
+        .then(res => res.json())
+        .then(result => {
+          let i = 0;
+          for (const a of this.informations) {
+              if (a.id === result.id) {
+                break;
+              }
+
+              ++i;
+          }
+          this.informations.splice(i, 1);
+        });
+    },
+    deleteSchedule(schedule) {
+      fetch(`http://${config.server.host}:${config.server.port}/schedule/${schedule.id}`, Object.assign({}, headers, {method: 'DELETE'}))
+        .then(res => res.json())
+        .then(result => {
+          let i = 0;
+          for (const a of this.schedules) {
+              if (a.id === result.id) {
+                  break;
+              }
+
+              ++i;
+          }
+          this.schedules.splice(i, 1);
         });
     }
   },
@@ -111,4 +143,17 @@ export default {
 </script>
 
 <style>
+.admin {
+  padding: 10px;
+}
+
+.admin-table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.admin-table td {
+  border: 1px solid black;
+  padding: 5px;
+}
 </style>
