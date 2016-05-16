@@ -4,8 +4,8 @@ var webpack = require('webpack')
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    path: path.resolve(__dirname, './static'),
+    publicPath: '/',
     filename: 'build.js'
   },
   resolveLoader: {
@@ -46,7 +46,8 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    noInfo: true
+    noInfo: true,
+    contentBase: path.join(__dirname, '/static')
   },
   devtool: '#eval-source-map'
 }

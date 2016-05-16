@@ -3,12 +3,14 @@
   "description": "TV Gala Client",
   "author": "Lucas Soulier <lucas.soulier@utt.fr>",
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot --port 9001",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "dev": "webpack-dev-server --content-base static --host 0.0.0.0 --inline --hot --port 9001",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "start": "npm run build && static static -p 9001 -a 0.0.0.0"
   },
   "dependencies": {
     "vue": "^1.0.0",
     "babel-runtime": "^5.8.0",
+    "node-static": "^0.7.7",
     "socket.io-client": "^1.4.6"
   },
   "devDependencies": {
