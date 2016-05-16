@@ -165,10 +165,12 @@ export default {
   width:60%;
   height:71.6%;
   float:left;
+  overflow:hidden;
 }
 
 .display-schedules-table {
   width:100%;
+  height:100%;
 }
 
 .display-schedules-table-line {
@@ -179,15 +181,19 @@ export default {
 
 .display-schedules-table-line-start {
   width:20%;
+  padding-top:1.5%;
   font-weight:bold;
   font-size:4vmin;
 }
 
 .display-schedules-table-line-name {
+  padding-top:1.5%;
   width:50%;
+  font-size:4.1vmin;
 }
 
 .display-schedules-table-line-location {
+  padding-top:1.5%;
   width:30%;
 }
 
