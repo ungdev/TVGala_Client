@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="display">
+  <div id="home" class="display">
     <div class="display-header">
       <div class="display-header-clock">{{ currentDate|hour }}</div>
       <div class="display-header-sms">Vos messages au<br /><strong>06 52 78 98 62</strong></div>
@@ -33,7 +33,7 @@
     <div class="display-informations">
       <div class="display-informations-message" v-el:t >
         <span v-show="!displayImages">{{ information.message }}</span>
-        <img src="{{ image }}" v-for="image in filteredImages"  v-show="displayImages" class="display-informations-message-image"/> 
+        <img src="{{ image }}" v-for="image in filteredImages"  v-show="displayImages" class="display-informations-message-image"/>
       </div>
     </div>
   </div>
