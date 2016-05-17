@@ -129,6 +129,10 @@ export default {
 </script>
 
 <style>
+html, body {
+  overflow:hidden;
+}
+
 .display {
   background-image:url('../static/background.png');
   background-repeat:no-repeat;

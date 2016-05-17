@@ -143,6 +143,10 @@ export default {
 </script>
 
 <style>
+html, body {
+  overflow:visible;
+}
+
 .admin {
   padding: 10px;
 }
