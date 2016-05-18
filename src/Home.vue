@@ -23,7 +23,7 @@
       <table class="display-sms-message" v-for="message in sms" transition="fade">
        <tr>
           <td class="display-sms-message-hour">{{ message.time|hour }}</td>
-          <td class="display-sms-message-content">{{ message.message }}</td>
+          <td class="display-sms-message-content">{{ message.message|censor censors }}</td>
         </tr>
       </table>
     </div>
@@ -41,6 +41,7 @@
 
 <script>
 import date from './lib/date';
+import censor from './lib/censor';
 import config from './config';
 import io from 'socket.io-client';
 
@@ -52,6 +53,7 @@ export default {
       information: {message: "Chargement..."},
       displayImages: false,
       schedules: [],
+      censors: [],
       sms: [],
       images: [],
       filteredImages: []
@@ -117,6 +119,11 @@ export default {
       this.schedules = data.sort((a,b) => {
         return new Date(a.start) - new Date(b.start);
       });
+    });
+
+    socket.on('censors', data => {
+      this.censors = data;
+      console.log(data);
     });
 
     socket.on('images', data => {
