@@ -1,5 +1,16 @@
 <template>
   <div id="admin" class="admin">
+    <h2>Censure:</h2>
+    <form v-on:prevent>
+      <input type="text" v-model="word"/> <input type="submit" value="Ajouter" @click="addCensor(inputCensor)"/>
+    </form>
+    <br /><br />
+    <table class="admin-table">
+      <tr v-for="censor in censors">
+        <td>{{ censor.word }}</td><td><button @click="deleteCensor(censor)">Supprimer</button></td>
+      </tr>
+    </table>
+
     <h2>Informations:</h2>
     <form v-on:prevent>
       <input type="text" v-model="message"/> <input type="submit" value="Ajouter" @click="addInformation(inputInformation)"/>
@@ -42,6 +53,8 @@ export default {
     return {
       informations: [],
       schedules: [],
+      censors: [],
+      word: '',
       message: '',
       name: '',
       location: '',
@@ -62,6 +75,13 @@ export default {
         .then(res => res.json())
         .then(result => {
           this.schedules.push(result);
+        });
+    },
+    addCensor(censor) {
+      fetch(`http://${config.server.host}:${config.server.port}/censor`, Object.assign({}, headers, {method: 'POST', body: JSON.stringify(censor)}))
+        .then(res => res.json())
+        .then(result => {
+          this.censors.push(result);
         });
     },
     deleteInformation(information) {
@@ -93,6 +113,21 @@ export default {
           }
           this.schedules.splice(i, 1);
         });
+    },
+    deleteCensor(censor) {
+      fetch(`http://${config.server.host}:${config.server.port}/censor/${censor.id}`, Object.assign({}, headers, {method: 'DELETE'}))
+        .then(res => res.json())
+        .then(result => {
+          let i = 0;
+          for (const a of this.censors) {
+              if (a.id === result.id) {
+                  break;
+              }
+
+              ++i;
+          }
+          this.censors.splice(i, 1);
+        });
     }
   },
   computed: {
@@ -118,6 +153,13 @@ export default {
         start: convertDate(start),
         end: convertDate(end)
       };
+    },
+    inputCensor() {
+      const word = this.word;
+      this.word = '';
+      return {
+        word: word
+      };
     }
   },
   attached() {
@@ -131,6 +173,12 @@ export default {
       .then(res => res.json())
       .then(results => {
         this.schedules = results;
+      });
+
+    fetch(`http://${config.server.host}:${config.server.port}/censors`)
+      .then(res => res.json())
+      .then(results => {
+        this.censors = results;
       });
 
       const $dateStart = this.$els.datestart;
