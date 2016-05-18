@@ -216,13 +216,14 @@ html, body {
 .display-sms-message-hour {
   font-weight:bold;
   font-size:2.5vmin;
-  width:10%;
+  width:69%;
+  padding-right:12%;
   border-right:1px double white;
 }
 
 .display-sms-message-content {
   font-size:2vmin;
-  padding-left:1%;
+  padding-left:6%;
 }
 
 .display-informations {
