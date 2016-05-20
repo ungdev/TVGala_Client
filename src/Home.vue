@@ -122,8 +122,9 @@ export default {
     });
 
     socket.on('censors', data => {
-      this.censors = data;
-      console.log(data);
+      this.censors = data.sort((a,b) => {
+        return b.word.length - a.word.length;
+      });
     });
 
     socket.on('images', data => {
