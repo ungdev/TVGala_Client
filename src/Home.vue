@@ -10,7 +10,7 @@
 
     <div class="display-schedules">
       <table class="display-schedules-table">
-        <tr v-for="schedule in schedules" v-if="!isPast(schedule.end)" class="display-schedules-table-line">
+        <tr v-for="schedule in schedules" v-if="!isPast(schedule.end)" class="display-schedules-table-line" transition="fade">
           <td class="display-schedules-table-line-start" v-if="!isPast(schedule.start)">{{ schedule.start|hour }}</td>
           <td class="display-schedules-table-line-start" v-else>En cours</td>
           <td class="display-schedules-table-line-name">{{ schedule.name }}</td>
