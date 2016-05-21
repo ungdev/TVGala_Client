@@ -182,11 +182,11 @@ html, body {
 
 .display-schedules-table {
   width:100%;
-  height:100%;
 }
 
 .display-schedules-table-line {
   width:100%;
+  max-height:15%;
   text-align:center;
   font-size:3vmin;
 }
@@ -196,17 +196,20 @@ html, body {
   padding-top:1.5%;
   font-weight:bold;
   font-size:4vmin;
+  max-height:11%;
 }
 
 .display-schedules-table-line-name {
   padding-top:1.5%;
   width:50%;
   font-size:4.1vmin;
+  max-height:11%;
 }
 
 .display-schedules-table-line-location {
   padding-top:1.5%;
   width:30%;
+  max-height:11%;
 }
 
 .display-sms {
@@ -223,14 +226,14 @@ html, body {
 
 .display-sms-message-hour {
   font-weight:bold;
-  font-size:2.5vmin;
-  width:20%;
+  font-size:2.8vmin;
+  max-width:20%;
   padding-right:10px;
   border-right:1px double white;
 }
 
 .display-sms-message-content {
-  font-size:2vmin;
+  font-size:2.4vmin;
   padding-left:10px;
 }
 
