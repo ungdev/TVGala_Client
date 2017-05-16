@@ -2,7 +2,7 @@
   <div id="home" class="display">
     <div class="display-header">
       <div class="display-header-clock">{{ currentDate|hour }}</div>
-      <div class="display-header-sms">Vos messages au<br /><strong>06 52 78 98 62</strong></div>
+      <div class="display-header-sms">Vos tweets sur le<br /><strong>#GalaUTT2017</strong></div>
       <div class="clear"></div>
     </div>
 
@@ -23,7 +23,7 @@
       <table class="display-sms-message" v-for="message in sms" transition="fade">
        <tr>
           <td class="display-sms-message-hour">{{ message.time|hour }}</td>
-          <td class="display-sms-message-content">{{ message.message|censor censors }}</td>
+          <td class="display-sms-message-content">@{{ message.from }}: {{ message.message|censor censors }}</td>
         </tr>
       </table>
     </div>
@@ -154,22 +154,25 @@ html, body {
 .display-header {
   width:100%;
   height:10%;
+  color:#222222;
 }
 
 .display-header-clock {
+  padding-top:10px;
   font-size:6vmin;
   width:10%;
   text-align:center;
   padding-top:0.4%;
-  margin-left:16%;
+  margin-left:8%;
   float:left;
 }
 
 .display-header-sms {
+  padding-top:10px;
   font-size:3.5vmin;
   width:18%;
   text-align:center;
-  margin-right:16%;
+  margin-right:8%;
   float:right;
 }
 
