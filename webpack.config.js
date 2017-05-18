@@ -1,71 +1,86 @@
 var path = require('path')
 var webpack = require('webpack')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, './static'),
-    publicPath: '/',
+    path: path.resolve(__dirname, './dist'),
     filename: 'build.js'
   },
-  resolveLoader: {
-    root: path.join(__dirname, 'node_modules'),
-  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.vue$/,
-        loader: 'vue'
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+          }
+          // other vue-loader options go here
+        }
       },
       {
         test: /\.js$/,
-        loader: 'babel',
+        loader: 'babel-loader',
         exclude: /node_modules/
       },
       {
-        test: /\.json$/,
-        loader: 'json'
-      },
-      {
-        test: /\.html$/,
-        loader: 'vue-html'
-      },
-      {
-          test  : /\.css$/,
-          loader: 'style-loader!css-loader?-url'
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ],
+        exclude: /node_modules/
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loader: 'url',
-        query: {
-          limit: 10000,
+        loader: 'file-loader',
+        options: {
           name: '[name].[ext]?[hash]'
         }
       }
     ]
   },
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js'
+    }
+  },
   devServer: {
     historyApiFallback: true,
-    noInfo: true,
-    contentBase: path.join(__dirname, '/static')
+    noInfo: true
+  },
+  performance: {
+    hints: false
   },
   devtool: '#eval-source-map'
 }
 
+module.exports.plugins = [
+  new webpack.ProvidePlugin({
+    moment: 'moment'
+  })
+];
+
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
-  // http://vuejs.github.io/vue-loader/workflow/production.html
+  // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'index.prod.html',
+      inject  : true
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
       compress: {
         warnings: false
       }
     }),
-    new webpack.optimize.OccurenceOrderPlugin()
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
+    })
   ])
 }

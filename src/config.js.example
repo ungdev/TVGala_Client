@@ -1,8 +1,6 @@
-const config = {
+export default {
 	server: {
 		host: 'localhost',
 		port: 9000
 	}
 };
-
-export default config;
