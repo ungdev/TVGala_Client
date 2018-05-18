@@ -27,7 +27,9 @@
         <h2>Programme:</h2>
         <form @submit.prevent="addSchedule(inputSchedule)">
             <input type="text" v-model="name"/> <input type="text" v-model="location"/><br />
-            <b-datetime-picker
+            <input type="text" v-model="start" value="2018-06-02T20:06:56.420Z"/>
+            <input type="text" v-model="end" value="2018-06-02T20:06:56.420Z"/><br />
+            <!--<b-datetime-picker
               v-model="start"
               locale="fr"
               header-format="DD MMM"
@@ -40,7 +42,7 @@
               header-format="DD MMM"
               cancel="Annuler"
               next="Suivant"
-              class="limit-width"></b-datetime-picker><br />
+              class="limit-width"></b-datetime-picker><br />-->
             <input type="submit" value="Ajouter" />
         </form>
         <br /><br />

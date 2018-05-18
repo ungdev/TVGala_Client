@@ -4,7 +4,7 @@
             <div class="g-header__clock">
                 <g-clock></g-clock>
             </div>
-            <div class="g-header__message">Vos tweets sur le<br /><strong>#GalaUTT2017</strong></div>
+            <div class="g-header__message">Vos tweets sur le<br /><strong>#GalaUTT2018</strong></div>
         </div>
 
         <div class="g-separator"></div>
@@ -86,13 +86,20 @@ export default {
 </script>
 
 <style lang="css">
+@font-face {
+    font-family: 'DINPro-CondBold'; /*a name to be used later*/
+    src: url('./assets/DINPro-CondBold.otf'); /*URL to font*/
+}
+@font-face {
+    font-family: 'DINAlternateBold'; /*a name to be used later*/
+    src: url('./assets/DINAlternateBold.otf'); /*URL to font*/
+}
 .g-display {
     background-image: url('./assets/background.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 100%;
     height: 100%;
-    font-family: Helvetica, Arial, sans-serif;
     color: white;
 }
 
@@ -101,6 +108,7 @@ export default {
     height: 10%;
     color: #222222;
     display: flex;
+    font-family: 'DINAlternateBold';
     justify-content: space-between;
 }
 
@@ -131,6 +139,7 @@ export default {
     overflow: hidden;
     display: flex;
     justify-content: space-between;
+    font-family: 'DINPro-CondBold';
 }
 
 .g-content > .g-content__schedules {
@@ -144,5 +153,6 @@ export default {
 .g-footer {
     width: 100%;
     height: 15.4%;
+    font-family: 'DINPro-CondBold';
 }
 </style>
