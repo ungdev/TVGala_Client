@@ -4,7 +4,7 @@
             <div class="g-header__clock">
                 <g-clock></g-clock>
             </div>
-            <div class="g-header__message">Vos tweets sur le<br /><strong>#GalaUTT2018</strong></div>
+            <div class="g-header__message">Vos messages via Twitter<br /><strong>#GalaUTT2018</strong> ou par SMS au <strong>06 52 78 98 62</strong></div>
         </div>
 
         <div class="g-separator"></div>
@@ -123,8 +123,8 @@ export default {
 .g-header > .g-header__message {
     padding-top: 10px;
     text-align: center;
-    width: 18%;
-    margin-right: 8%;
+    width: 35%;
+    margin-right: 3%;
     font-size: 3.5vmin;
 }
 
