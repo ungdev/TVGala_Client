@@ -4,7 +4,7 @@
             <div class="g-header__clock">
                 <g-clock></g-clock>
             </div>
-            <div class="g-header__message">Vos messages via Twitter<br /><strong>#GalaUTT2018</strong> ou par SMS au <strong>06 52 78 98 62</strong></div>
+            <div class="g-header__message">Vos messages via Twitter<br /><strong>#GalaUTT</strong> ou par SMS au <strong>06 52 78 98 62</strong></div>
         </div>
 
         <div class="g-separator"></div>
