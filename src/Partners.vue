@@ -69,7 +69,7 @@ export default {
 .g-partners {
     height: 100%;
     width: 100%;
-    display: block;
+    display: block !important;
 }
 .g-partners > .g-partners__image {
   width: 100%;
