@@ -47,6 +47,10 @@ import Informations from './Informations.vue';
 import Partners from './Partners.vue';
 import Messages     from './Messages.vue';
 import Schedules    from './Schedules.vue';
+import bde from "./assets/BDE.png"
+import nrj from "./assets/NRJ.png"
+import meritis from "./assets/meritis.png"
+import synetis from "./assets/synetis.png"
 
 import config from './config.js';
 
@@ -54,7 +58,7 @@ export default {
     data() {
         return {
             censors     : [],
-            images      : [],
+            images      : [bde, nrj, meritis, synetis],
             informations: [],
             messages    : [],
             socket      : io.connect(`http://${config.server.host}:${config.server.port}`),
