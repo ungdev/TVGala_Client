@@ -9,7 +9,7 @@
 
         <div class="g-content">
             <div class="g-content__partners">
-                <g-informations :informations="informations" :images="images"></g-informations>
+                <g-partners :partners="images"></g-partners>
             </div>
             <div class="g-content__schedules">
                 <g-schedules :schedules="schedules"></g-schedules>
@@ -20,7 +20,7 @@
         </div>
 
         <div class="g-footer">
-            <g-informations :informations="informations" :images="images"></g-informations>
+            <g-informations :informations="informations"></g-informations>
         </div>
     </div>
 </template>
@@ -30,16 +30,26 @@ import io from 'socket.io-client';
 
 import Clock        from './Clock.vue';
 import Informations from './Informations.vue';
+import Partners     from './Partners.vue';
 import Messages     from './Messages.vue';
 import Schedules    from './Schedules.vue';
 
 import config from './config.js';
+import bde from "./assets/BDE.png"
+import nrj from "./assets/NRJ.png"
+import meritis from "./assets/meritis.png"
+import synetis from "./assets/synetis.png"
 
 export default {
     data() {
         return {
             censors     : [],
-            images      : [],
+            images      : [
+              bde,
+              nrj,
+              meritis,
+              synetis,
+            ],
             informations: [],
             messages    : [],
             socket      : io.connect(`http://${config.server.host}:${config.server.port}`),
@@ -50,6 +60,7 @@ export default {
     components: {
         'g-clock'       : Clock,
         'g-informations': Informations,
+        'g-partners': Partners,
         'g-messages'    : Messages,
         'g-schedules'   : Schedules
     },
@@ -65,8 +76,9 @@ export default {
         });
 
         this.socket.on('images', (data) => {
-            this.images = data
-                .map(image => `http://${config.server.host}:${config.server.port}/images/${image}`);
+          console.log(data)
+            //this.images = data
+              //  .map(image => `http://${config.server.host}:${config.server.port}/images/${image}`);
         });
 
         this.socket.on('informations', (data) => {

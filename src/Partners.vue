@@ -1,10 +1,7 @@
 <template>
     <transition name="fade">
         <div class="g-partners" v-show="show">
-            <span v-if="partnerIndex > -1" class="g-partners__message"><img :src="{{ displayedPartner }}" class="g-informations__images__image" /></span>
-            <span v-if="imagesIndex > -1" class="g-informations__images">
-                
-            </span>
+            <div v-if="partnerIndex > -1" class="g-partners__image"><img :src="displayedPartner" /></div>
         </div>
     </transition>
 </template>
@@ -28,15 +25,17 @@ export default {
 
         displayedPartner() {
             if (this.partnerIndex > -1 && this.partners.length > 0) {
-                return this.partners[this.partnerIndex].message;
+                console.log(this.partners[this.partnerIndex])
+                return this.partners[this.partnerIndex];
             }
-
+            console.log(':/')
             return '';
         },
     },
 
     methods: {
         displayNextPartner() {
+            console.log(this.partners)
             const testIndex = this.partnerIndex + 1;
             if (this.partners.length === 0) {
                 return setTimeout(this.displayNextPartner, 5000);
@@ -68,11 +67,19 @@ export default {
 
 <style lang="css">
 .g-partners {
-    padding-top: 18px;
     height: 100%;
-    width: 98%;
-    text-align: center;
-    margin: auto;
-    font-size: 4vmin;
+    width: 100%;
+    display: block;
+}
+.g-partners > .g-partners__image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.g-partners > .g-partners__image > img {
+  width: 90%;
+  height: 90%;
 }
 </style>
