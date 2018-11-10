@@ -53,7 +53,7 @@ export default {
 .g-schedules {
     width: 100%;
     height: 100%;
-    border-spacing: 0px;
+    border-spacing: 1px;
 }
 
 .g-schedules > .g-schedules__line {

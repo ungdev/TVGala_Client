@@ -70,6 +70,6 @@ export default {
     width: 98%;
     text-align: center;
     margin: auto;
-    font-size: 4vmin;
+    font-size: 3vmin;
 }
 </style>

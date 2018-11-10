@@ -8,30 +8,16 @@
 
 
         <div class="g-content">
-            <div class="g-content__left">
-                <div class="g-content__partners">
-                    <g-informations :informations="informations" :images="images"></g-informations>
-                </div>
-                <div class="g-separator"></div>
-                <div class="g-separator"></div>
-                <div class="g-separator"></div>
-                <div class="g-separator"></div>
-                <div class="g-separator"></div>
-                <div class="g-separator"></div>
-                <div class="g-separator"></div>
-                <div class="g-content__messages">
-                    <g-messages :messages="messages" :censors="censors"></g-messages>
-                </div>
+            <div class="g-content__partners">
+                <g-informations :informations="informations" :images="images"></g-informations>
             </div>
             <div class="g-content__schedules">
                 <g-schedules :schedules="schedules"></g-schedules>
             </div>
+            <div class="g-content__messages">
+                <g-messages :messages="messages" :censors="censors"></g-messages>
+            </div>
         </div>
-
-        <div class="g-separator"></div>
-        <div class="g-separator"></div>
-        <div class="g-separator"></div>
-        <div class="g-separator"></div>
 
         <div class="g-footer">
             <g-informations :informations="informations" :images="images"></g-informations>
@@ -108,7 +94,7 @@ export default {
     src: url('./assets/lemon_milk/LemonMilkbold.otf'); /*URL to font*/
 }
 .g-display {
-    background-image: url('./assets/fond-horizontal.png');
+    background-image: url('./assets/fond-vertical.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 100%;
@@ -118,7 +104,7 @@ export default {
 
 .g-header {
     width: 100%;
-    height: 5%;
+    height: 7%;
     color: #222222;
     display: flex;
     font-family: 'LemonMilk';
@@ -126,7 +112,7 @@ export default {
 }
 
 .g-header > .g-header__clock {
-    padding-top: 0px;
+    margin-top: 2%;
     text-align: center;
     width: 10%;
     margin-left: 8%;
@@ -149,37 +135,39 @@ export default {
 
 .g-content {
     width: 100%;
-    height: 72.5%;
-    overflow: hidden;
+    height: 85%;
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: flex-end;
     font-family: 'LemonMilk';
 }
 
-.g-content > .g-content__schedules {
-    width: 55%;
-    height: 100%;
-}
-
-.g-content > .g-content__left {
-    width: 45%;
-}
-.g-content > .g-content__left > .g-content__partners {
-    width: 35%;
-    height: 35%;
-    margin-left: 65%;
+.g-content > .g-content__partners {
+    width: 25.5%;
+    height: 17%;
+    margin-right: 6.5%;
+    margin-left: 50%;
     color: black;
 }
-.g-content > .g-content__left > .g-content__messages {
-    margin-left: 8%;
-    margin-right: 2%;
-    height: 50%;
+
+.g-content > .g-content__schedules {
+    width: 100%;
+    height: 52%;
+    margin-top: 10%;
+}
+
+.g-content > .g-content__messages {
+    margin-top: 3%;
+    width: 100%;
+    height: 16%;
     color:black;
+    overflow: hidden;
 }
 
 .g-footer {
+    margin-top: 3%;
     width: 100%;
-    height: 10%;
+    height: 5%;
     font-family: 'LemonMilk';
     color: black;
 }
