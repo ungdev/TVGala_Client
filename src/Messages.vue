@@ -3,7 +3,7 @@
         <tr v-for="message in messages" :key="message.time" class="g-messages__line">
             <td class="g-messages__line__hour">{{ message.time | hour }}</td>
             <td class="g-messages__line__content">
-                <span class="g-messages__line__content__name">@{{ message.from }}</span><br />
+                <span class="g-messages__line__content__name">@{{ message.from }} :</span><br />
                 {{ message.message | censor(censors) }}
             </td>
         </tr>
@@ -25,7 +25,7 @@ export default {
 <style lang="css">
 .g-messages {
     width: 100%;
-    border-spacing: 20px;
+    border-spacing: 5px;
 }
 
 .g-messages > .g-messages__line {
@@ -37,8 +37,10 @@ export default {
     font-weight: bold;
     font-size: 2.8vmin;
     border-right: 1px double white;
-    padding-right: 20px;
+    padding-right: 7px;
+    padding-left: 7px;
     width: 10%;
+    vertical-align: top;
 }
 
 .g-messages__line > .g-messages__line__content {

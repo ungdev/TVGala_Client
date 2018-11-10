@@ -1,11 +1,10 @@
 <template>
-    <transition-group name="fade" tag="table" class="g-schedules">
-        <tr v-for="schedule in displayedSchedules" :key="schedule.name" class="g-schedules__line">
-            <td class="g-schedules__line__start" v-if="!isPast(schedule.start)">{{ schedule.start | hour }}</td>
-            <td class="g-schedules__line__start" v-else>En cours</td>
-            <td class="g-schedules__line__name">{{ schedule.name }}</td>
-            <td class="g-schedules__line__location">{{ schedule.location }}</td>
-        </tr>
+    <transition-group name="fade" tag="div" class="g-schedules">
+        <div v-for="schedule in displayedSchedules" :key="schedule.name" class="g-schedules__line">
+            <div class="g-schedules__line__start" v-if="!isPast(schedule.start)">À suivre ({{ schedule.start | hour }})</div>
+            <div class="g-schedules__line__start" v-else>Maintenant</div>
+            <div class="g-schedules__line__name"><span>{{ schedule.name }}</span></div>
+        </div>
     </transition-group>
 </template>
 
@@ -53,12 +52,14 @@ export default {
 <style lang="css">
 .g-schedules {
     width: 100%;
-    border-spacing: 30px;
+    height: 100%;
+    border-spacing: 0px;
 }
 
 .g-schedules > .g-schedules__line {
     width: 100%;
-    max-height: 12%;
+    height: 42%;
+    margin-bottom: 11%;
     text-align: center;
     font-size: 3vmin;
 }
@@ -68,17 +69,22 @@ export default {
 }
 
 .g-schedules__line > .g-schedules__line__start {
-    width: 20%;
+    margin-top: 5%;
+    margin-left: 12%;
+    text-align: left;
     font-weight: bold;
-    font-size: 4vmin;
+    font-size: 3vmin;
 }
 
 .g-schedules__line > .g-schedules__line__name {
-    width: 50%;
-    font-size: 4.1vmin;
+    margin-top: 3%;
+    margin-left: 6%;
+    margin-right: 7%;
+    font-size: 6.5vmin;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 160px;
 }
 
-.g-schedules__line > .g-schedules__line__location {
-    width: 30%;
-}
 </style>

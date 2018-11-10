@@ -4,20 +4,33 @@
             <div class="g-header__clock">
                 <g-clock></g-clock>
             </div>
-            <div class="g-header__message">Vos messages via Twitter<br /><strong>#GalaUTT</strong> ou par SMS au <strong>06 52 78 98 62</strong></div>
         </div>
 
-        <div class="g-separator"></div>
 
         <div class="g-content">
+            <div class="g-content__left">
+                <div class="g-content__partners">
+                    <g-informations :informations="informations" :images="images"></g-informations>
+                </div>
+                <div class="g-separator"></div>
+                <div class="g-separator"></div>
+                <div class="g-separator"></div>
+                <div class="g-separator"></div>
+                <div class="g-separator"></div>
+                <div class="g-separator"></div>
+                <div class="g-separator"></div>
+                <div class="g-content__messages">
+                    <g-messages :messages="messages" :censors="censors"></g-messages>
+                </div>
+            </div>
             <div class="g-content__schedules">
                 <g-schedules :schedules="schedules"></g-schedules>
             </div>
-            <div class="g-content__messages">
-                <g-messages :messages="messages" :censors="censors"></g-messages>
-            </div>
         </div>
 
+        <div class="g-separator"></div>
+        <div class="g-separator"></div>
+        <div class="g-separator"></div>
         <div class="g-separator"></div>
 
         <div class="g-footer">
@@ -58,7 +71,7 @@ export default {
     mounted() {
         this.socket.on('connect', () => {
             console.log('Client has connected to the server!');
-        });
+        })
 
         this.socket.on('censors', (data) => {
             this.censors = data
@@ -87,15 +100,15 @@ export default {
 
 <style lang="css">
 @font-face {
-    font-family: 'DINPro-CondBold'; /*a name to be used later*/
-    src: url('./assets/DINPro-CondBold.otf'); /*URL to font*/
+    font-family: 'LemonMilk'; /*a name to be used later*/
+    src: url('./assets/lemon_milk/LemonMilk.otf'); /*URL to font*/
 }
 @font-face {
-    font-family: 'DINAlternateBold'; /*a name to be used later*/
-    src: url('./assets/DINAlternateBold.otf'); /*URL to font*/
+    font-family: 'LemonMilkbold'; /*a name to be used later*/
+    src: url('./assets/lemon_milk/LemonMilkbold.otf'); /*URL to font*/
 }
 .g-display {
-    background-image: url('./assets/background.png');
+    background-image: url('./assets/fond-horizontal.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 100%;
@@ -105,19 +118,20 @@ export default {
 
 .g-header {
     width: 100%;
-    height: 10%;
+    height: 5%;
     color: #222222;
     display: flex;
-    font-family: 'DINAlternateBold';
+    font-family: 'LemonMilk';
     justify-content: space-between;
 }
 
 .g-header > .g-header__clock {
-    padding-top: 10px;
+    padding-top: 0px;
     text-align: center;
     width: 10%;
     margin-left: 8%;
     font-size: 6vmin;
+    color: white;
 }
 
 .g-header > .g-header__message {
@@ -130,29 +144,43 @@ export default {
 
 .g-separator {
     width: 100%;
-    height: 1.5%;
+    height: 2.5%;
 }
 
 .g-content {
     width: 100%;
-    height: 71.6%;
+    height: 72.5%;
     overflow: hidden;
     display: flex;
     justify-content: space-between;
-    font-family: 'DINPro-CondBold';
+    font-family: 'LemonMilk';
 }
 
 .g-content > .g-content__schedules {
-    width: 60%;
+    width: 55%;
+    height: 100%;
 }
 
-.g-content > .g-content__messages {
-    width: 39%;
+.g-content > .g-content__left {
+    width: 45%;
+}
+.g-content > .g-content__left > .g-content__partners {
+    width: 35%;
+    height: 35%;
+    margin-left: 65%;
+    color: black;
+}
+.g-content > .g-content__left > .g-content__messages {
+    margin-left: 8%;
+    margin-right: 2%;
+    height: 50%;
+    color:black;
 }
 
 .g-footer {
     width: 100%;
-    height: 15.4%;
-    font-family: 'DINPro-CondBold';
+    height: 10%;
+    font-family: 'LemonMilk';
+    color: black;
 }
 </style>
