@@ -10,7 +10,7 @@
         <div class="g-content">
             <div class="g-content__left">
                 <div class="g-content__partners">
-                    <g-informations :informations="informations" :images="images"></g-informations>
+                    <g-partners :partners="images"></g-partners>
                 </div>
                 <div class="g-separator"></div>
                 <div class="g-separator"></div>
@@ -44,6 +44,7 @@ import io from 'socket.io-client';
 
 import Clock        from './Clock.vue';
 import Informations from './Informations.vue';
+import Partners from './Partners.vue';
 import Messages     from './Messages.vue';
 import Schedules    from './Schedules.vue';
 
@@ -64,6 +65,7 @@ export default {
     components: {
         'g-clock'       : Clock,
         'g-informations': Informations,
+        'g-partners': Partners,
         'g-messages'    : Messages,
         'g-schedules'   : Schedules
     },
@@ -79,8 +81,7 @@ export default {
         });
 
         this.socket.on('images', (data) => {
-            this.images = data
-                .map(image => `http://${config.server.host}:${config.server.port}/images/${image}`);
+          console.log(data)
         });
 
         this.socket.on('informations', (data) => {
