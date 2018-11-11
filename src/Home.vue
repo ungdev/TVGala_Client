@@ -165,11 +165,11 @@ export default {
 .g-content > .g-content__schedules {
     width: 100%;
     height: 52%;
-    margin-top: 10%;
+    margin-top: 1%;
 }
 
 .g-content > .g-content__messages {
-    margin-top: 3%;
+    margin-top: 0%;
     width: 100%;
     height: 16%;
     color:black;

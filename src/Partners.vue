@@ -79,7 +79,7 @@ export default {
   justify-content: center;
 }
 .g-partners > .g-partners__image > img {
-  width: 90%;
-  height: 90%;
+  width: 85%;
+  height: 85%;
 }
 </style>

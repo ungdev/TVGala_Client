@@ -59,7 +59,7 @@ export default {
 .g-schedules > .g-schedules__line {
     width: 100%;
     height: 42%;
-    margin-bottom: 11%;
+    margin-bottom: 5%;
     text-align: center;
     font-size: 3vmin;
 }
