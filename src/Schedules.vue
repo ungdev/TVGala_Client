@@ -89,7 +89,7 @@ export default {
 
 @media screen and (max-height: 800px){
   .g-schedules > .g-schedules__line {
-      margin-bottom: 14%;
+      margin-bottom: 19%;
   }
 }
 
