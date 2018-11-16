@@ -15,7 +15,7 @@
                 <g-schedules :schedules="schedules"></g-schedules>
             </div>
             <div class="g-content__messages">
-                <g-messages :messages="messages" :censors="censors"></g-messages>
+                <g-messages :sms="sms" :censors="censors"></g-messages>
             </div>
         </div>
 
@@ -51,7 +51,7 @@ export default {
               synetis,
             ],
             informations: [],
-            messages    : [],
+            sms    : [],
             socket      : io.connect(`http://${config.server.host}:${config.server.port}`),
             schedules   : []
         };
@@ -75,12 +75,6 @@ export default {
                 .sort((a, b) => (b.word.length - a.word.length));
         });
 
-        this.socket.on('images', (data) => {
-          console.log(data)
-            //this.images = data
-              //  .map(image => `http://${config.server.host}:${config.server.port}/images/${image}`);
-        });
-
         this.socket.on('informations', (data) => {
             this.informations = data;
         });
@@ -90,7 +84,7 @@ export default {
         });
 
         this.socket.on('sms', (data) => {
-            this.messages.unshift(data);
+            this.sms = data.reverse()
         });
     }
 }

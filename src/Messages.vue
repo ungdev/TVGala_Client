@@ -1,7 +1,7 @@
 <template>
     <transition-group name="fade" tag="table" class="g-messages">
-        <tr v-for="message in messages" :key="message.time" class="g-messages__line">
-            <td class="g-messages__line__hour">{{ message.time | hour }}</td>
+        <tr v-for="message in sms" :key="message.createdAt" class="g-messages__line">
+            <td class="g-messages__line__hour">{{ message.createdAt | hour }}</td>
             <td class="g-messages__line__content">
                 <span class="g-messages__line__content__name">@{{ message.from }} :</span><br />
                 {{ message.message | censor(censors) }}
@@ -17,7 +17,7 @@ import './lib/dates';
 export default {
     props: {
         censors : Array,
-        messages: Array
+        sms: Array
     }
 }
 </script>
