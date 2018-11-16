@@ -25,17 +25,14 @@ export default {
 
         displayedPartner() {
             if (this.partnerIndex > -1 && this.partners.length > 0) {
-                console.log(this.partners[this.partnerIndex])
                 return this.partners[this.partnerIndex];
             }
-            console.log(':/')
             return '';
         },
     },
 
     methods: {
         displayNextPartner() {
-            console.log(this.partners)
             const testIndex = this.partnerIndex + 1;
             if (this.partners.length === 0) {
                 return setTimeout(this.displayNextPartner, 5000);

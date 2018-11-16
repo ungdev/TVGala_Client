@@ -20,7 +20,7 @@
                 <div class="g-separator"></div>
                 <div class="g-separator"></div>
                 <div class="g-content__messages">
-                    <g-messages :messages="messages" :censors="censors"></g-messages>
+                    <g-messages :sms="sms" :censors="censors"></g-messages>
                 </div>
             </div>
             <div class="g-content__schedules">
@@ -60,7 +60,7 @@ export default {
             censors     : [],
             images      : [bde, nrj, meritis, synetis],
             informations: [],
-            messages    : [],
+            sms         : [],
             socket      : io.connect(`http://${config.server.host}:${config.server.port}`),
             schedules   : []
         };
@@ -83,11 +83,6 @@ export default {
             this.censors = data
                 .sort((a, b) => (b.word.length - a.word.length));
         });
-
-        this.socket.on('images', (data) => {
-          console.log(data)
-        });
-
         this.socket.on('informations', (data) => {
             this.informations = data;
         });
@@ -97,7 +92,7 @@ export default {
         });
 
         this.socket.on('sms', (data) => {
-            this.messages.unshift(data);
+            this.sms = data.reverse()
         });
     }
 }

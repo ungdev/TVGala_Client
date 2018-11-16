@@ -1,61 +1,73 @@
 <template>
-    <div id="admin" class="admin">
-        <h2>Censure:</h2>
-        <form @submit.prevent="addCensor(inputCensor)">
-            <input type="text" v-model="word"/> <input type="submit" value="Ajouter"/>
-        </form>
-        <br /><br />
+    <div class="adminroot">
+      <div id="admin" class="admin">
+          <h2>Censure:</h2>
+          <form @submit.prevent="addCensor(inputCensor)">
+              <input type="text" v-model="word"/> <input type="submit" value="Ajouter"/>
+          </form>
+          <br /><br />
 
-        <table class="admin-table">
-            <tr v-for="censor in censors">
-                <td>{{ censor.word }}</td><td><button @click="deleteCensor(censor)">Supprimer</button></td>
-            </tr>
-        </table>
+          <table class="admin-table">
+              <tr v-for="censor in censors">
+                  <td>{{ censor.word }}</td><td><button @click="deleteCensor(censor)">Supprimer</button></td>
+              </tr>
+          </table>
 
-        <h2>Informations:</h2>
-        <form @submit.prevent="addInformation(inputInformation)">
-            <input type="text" v-model="message"/> <input type="submit" value="Ajouter" />
-        </form>
-        <br /><br />
+          <h2>Informations:</h2>
+          <form @submit.prevent="addInformation(inputInformation)">
+              <input type="text" v-model="message"/> <input type="submit" value="Ajouter" />
+          </form>
+          <br /><br />
 
-        <table class="admin-table">
-            <tr v-for="information in informations">
-                <td>{{ information.message }}</td><td><button @click="deleteInformation(information)">Supprimer</button></td>
-            </tr>
-        </table>
+          <table class="admin-table">
+              <tr v-for="information in informations">
+                  <td>{{ information.message }}</td><td><button @click="deleteInformation(information)">Supprimer</button></td>
+              </tr>
+          </table>
 
-        <h2>Programme:</h2>
-        <form @submit.prevent="addSchedule(inputSchedule)">
-            <input type="text" v-model="name"/> <input type="text" v-model="location"/><br />
-            <input type="text" v-model="start" value="2018-06-02T20:06:56.420Z"/>
-            <input type="text" v-model="end" value="2018-06-02T20:06:56.420Z"/><br />
-            <!--<b-datetime-picker
-              v-model="start"
-              locale="fr"
-              header-format="DD MMM"
-              cancel="Annuler"
-              next="Suivant"
-              class="limit-width"></b-datetime-picker>
-            <b-datetime-picker
-              v-model="end"
-              locale="fr"
-              header-format="DD MMM"
-              cancel="Annuler"
-              next="Suivant"
-              class="limit-width"></b-datetime-picker><br />-->
-            <input type="submit" value="Ajouter" />
-        </form>
-        <br /><br />
+          <h2>Programme:</h2>
+          <form @submit.prevent="addSchedule(inputSchedule)">
+              <input type="text" v-model="name"/> <input type="text" v-model="location"/><br />
+              <input type="text" v-model="start" value="2018-06-02T20:06:56.420Z"/>
+              <input type="text" v-model="end" value="2018-06-02T20:06:56.420Z"/><br />
+              <!--<b-datetime-picker
+                v-model="start"
+                locale="fr"
+                header-format="DD MMM"
+                cancel="Annuler"
+                next="Suivant"
+                class="limit-width"></b-datetime-picker>
+              <b-datetime-picker
+                v-model="end"
+                locale="fr"
+                header-format="DD MMM"
+                cancel="Annuler"
+                next="Suivant"
+                class="limit-width"></b-datetime-picker><br />-->
+              <input type="submit" value="Ajouter" />
+          </form>
+          <br /><br />
 
-        <table class="admin-table">
-            <tr v-for="schedule in schedules">
-                <td>{{ schedule.name }}</td><td>{{ schedule.location }}</td><td>{{ schedule.start|date }}</td><td>{{ schedule.end|date }}</td><td><button @click="deleteSchedule(schedule)">Supprimer</button></td>
-            </tr>
-        </table>
+          <table class="admin-table">
+              <tr v-for="schedule in schedules">
+                  <td>{{ schedule.name }}</td><td>{{ schedule.location }}</td><td>{{ schedule.start|date }}</td><td>{{ schedule.end|date }}</td><td><button @click="deleteSchedule(schedule)">Supprimer</button></td>
+              </tr>
+          </table>
+      </div>
+      <div class="admin-sms">
+        <div class="admin-sms-body" v-for="s in sms">
+          <h1>@{{ s.from }} :</h1>
+          <p>{{ s.message }}</p>
+          <form @submit.prevent="deleteSMS(s.id)">
+              <input type="submit" value="Supprimer" />
+          </form>
+        </div>
+      </div>
     </div>
 </template>
 
 <script>
+import io from 'socket.io-client';
 import config          from './config';
 import { convertDate } from './lib/dates';
 
@@ -78,7 +90,9 @@ export default {
             name        : '',
             location    : '',
             start       : new Date(),
-            end         : new Date()
+            end         : new Date(),
+            socket      : io.connect(`http://${config.server.host}:${config.server.port}`),
+            sms         : [],
         }
     },
     methods: {
@@ -144,7 +158,21 @@ export default {
                     }
                     this.censors.splice(i, 1);
                 });
-        }
+        },
+        deleteSMS(id) {
+          fetch(`http://${config.server.host}:${config.server.port}/sms/${id}`, Object.assign({}, headers, {method: 'DELETE'}))
+            .then(res => res.json())
+            .then((result) => {
+                let i = 0;
+                for (const s of this.sms) {
+                    if (s.id === id) {
+                        break;
+                    }
+                    ++i;
+                }
+                this.sms.splice(i, 1);
+            });
+        },
     },
     computed: {
         inputInformation() {
@@ -196,6 +224,10 @@ export default {
             .then((results) => {
                 this.censors = results;
             });
+        
+        this.socket.on('sms', (data) => {
+            this.sms = data.reverse().splice(0, 5)
+        });
     }
 }
 </script>
@@ -204,9 +236,21 @@ export default {
 html, body {
     overflow: visible !important;
 }
-
+.adminroot {
+  display: flex;
+}
 .admin {
     padding: 10px;
+    width: 50%;
+}
+.admin-sms {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-sms-body {
+  width: 100%;
 }
 
 .admin-table {
