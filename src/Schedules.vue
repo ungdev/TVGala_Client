@@ -94,7 +94,7 @@ export default {
 }
 @media screen and (min-width: 1250px) and (max-width: 1300px){
   .g-schedules > .g-schedules__line {
-      margin-bottom: 5%;
+      margin-bottom: 7%;
   }
 }
 </style>
